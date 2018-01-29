@@ -1,37 +1,26 @@
-# CppThread
-Generic C++ Thread for Linux and Windows
+# CppTimer
+Generic C++ Timer for Linux
 
-It's a wrapper aroung pthreads and Windows threads.
+It's a wrapper around the Linux timers
 
 ## Usage
-Include CppThread.h in your program.
+Include CppTimer.h in your program.
 
-### Create the Thread class
+### Create the Timer class
 ```
-class MyThread : public CppThread {
+class MyTimer : public CppTimer {
 
-public:
-	// override the constructor and add your init stuff
-	MyThread(myArgs) {	    
-	    // Your init code here!
+	void timerEvent() {
+		// your timer event code here
 	}
-
-private:
-	// implement run which is doing all the work
-	void run() {
-	     // Your magic worker here!
-	}
-	
-private:
-	// Your private data
 };
 ```
 
-### Run the Thread class
+### Run the Timer class
 ```
-	MyThread myThread;
-	myThread.start();
-	myThread.join();
+	MyTimer myTimer;
+	// every 500ms
+	myTimer.start(500);
 ```
 
 That's it. Enjoy!
