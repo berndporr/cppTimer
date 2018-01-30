@@ -6,6 +6,8 @@
  * Version 3, 29 June 2007
  *
  * (C) 2018, Bernd Porr <mail@bernporr.me.uk>
+ * 
+ * This is inspired by the timer_create man page.
  **/
 
 #include <stdlib.h>
@@ -51,14 +53,12 @@ public:
 	}
 
 	// start in mseconds. Needs to be less than 1sec.
-	void start(long msec) {
-		if (msec > 999)
-			throw("Timer value needs to be less than 1sec");
+	void start(long nanosecs) {
 		// starts instantly
 		its.it_value.tv_sec = 0;
 		its.it_value.tv_nsec = 1;
-		its.it_interval.tv_sec = 0;
-		its.it_interval.tv_nsec = msec*1000000;		
+		its.it_interval.tv_sec = nanosecs / 1000000000;
+		its.it_interval.tv_nsec = nanosecs % 1000000000;
 		if (timer_settime(timerid, 0, &its, NULL) == -1)
 			throw("Could not start timer");
 	}

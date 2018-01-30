@@ -6,7 +6,8 @@
 class DemoTimer1 : public CppTimer {
 
 	void timerEvent() {
-		printf("Buh!\n");
+		fprintf(stdout,"Buh! ");
+		fflush(stdout);
 	}
 };
 
@@ -14,16 +15,16 @@ class DemoTimer1 : public CppTimer {
 class DemoTimer2 : public CppTimer {
 
 	void timerEvent() {
-		printf("Bah!\n");
+		fprintf(stdout,"Bah!\n");
 	}
 };
 
 
 main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
-	demoTimer1.start(500);
+	demoTimer1.start(250000000);
 	DemoTimer2 demoTimer2;
-	demoTimer2.start(250);
+	demoTimer2.start(1000000000);
 	do {
 		sleep(1);
 	} while (1);
