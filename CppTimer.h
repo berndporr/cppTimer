@@ -57,7 +57,7 @@ public:
 		// delete the timer
 		timer_delete(timerid);
 		// default action for signal handling
-		signal(SIG, SIG_DFL);
+		signal(SIG, SIG_IGN);
 	}
 
 	// start the timer
