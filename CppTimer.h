@@ -25,7 +25,6 @@ private:
 
 	timer_t timerid;
 	struct sigevent sev;
-	sigset_t mask;
 	struct sigaction sa;
 	struct itimerspec its;
 		

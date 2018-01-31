@@ -25,9 +25,11 @@ main( int argc, const char* argv[] ) {
 	demoTimer1.start(250000000);
 	DemoTimer2 demoTimer2;
 	demoTimer2.start(1000000000);
-	int a = 20;
+
+	// do nothing and keep sleeping
+	// we need the loop because the sleep
+	// will be interrupted by the timers
 	do {
 		sleep(1);
-	} while (a--);
-	printf("\n");
+	} while (1);
 }
