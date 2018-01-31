@@ -32,27 +32,35 @@ private:
 	static void handler(int sig, siginfo_t *si, void *uc ) {
 		(reinterpret_cast<CppTimer *> (si->si_value.sival_ptr))->timerEvent();
 	}
-	
+
 public:
 	CppTimer() {
+		// We create a static handler catches the signal SIG
 		sa.sa_flags = SA_SIGINFO;
 		sa.sa_sigaction = handler;
 		sigemptyset(&sa.sa_mask);
 		if (sigaction(SIG, &sa, NULL) == -1)
 			throw("Could not create signal handler");
 		
-		/* Create the timer */
+		// Create the timer
 		sev.sigev_notify = SIGEV_SIGNAL;
 		sev.sigev_signo = SIG;
+		// Cruical is that the signal carries the pointer to this class instance here
+		// because the handler just handles anything that comes in!
 		sev.sigev_value.sival_ptr = this;
+		// create the timer
 		if (timer_create(CLOCKID, &sev, &timerid) == -1)
 			throw("Could not create timer");
 	};
 	
 	virtual ~CppTimer() {
+		// delete the timer
+		timer_delete(timerid);
+		// default action for signal handling
+		signal(SIG, SIG_DFL);
 	}
 
-	// start in mseconds. Needs to be less than 1sec.
+	// start the timer
 	void start(long nanosecs) {
 		// starts instantly
 		its.it_value.tv_sec = 0;

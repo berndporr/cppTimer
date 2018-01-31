@@ -25,7 +25,9 @@ main( int argc, const char* argv[] ) {
 	demoTimer1.start(250000000);
 	DemoTimer2 demoTimer2;
 	demoTimer2.start(1000000000);
+	int a = 20;
 	do {
 		sleep(1);
-	} while (1);
+	} while (a--);
+	printf("\n");
 }
