@@ -19,8 +19,8 @@ class MyTimer : public CppTimer {
 ### Run the Timer class
 ```
 	MyTimer myTimer;
-	// every 500ms
-	myTimer.start(500);
+	// every 500000ns
+	myTimer.start(500000);
 ```
 
 ### Demo program
