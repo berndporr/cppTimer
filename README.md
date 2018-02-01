@@ -23,4 +23,10 @@ class MyTimer : public CppTimer {
 	myTimer.start(500);
 ```
 
+### Demo program
+
+To run `demo.cpp` just do `cmake .`, `make` and then `./demo`.
+
+
+
 That's it. Enjoy!
