@@ -15,7 +15,7 @@ class DemoTimer1 : public CppTimer {
 class DemoTimer2 : public CppTimer {
 
 	void timerEvent() {
-		fprintf(stdout,"Bah!\n");
+		fprintf(stdout,"Bah!!!!!!\n");
 	}
 };
 
