@@ -31,6 +31,12 @@ then at the specified interval.
 
 To run `demo.cpp` just do `cmake .`, `make` and then `./demo`.
 
+## Callback version
+
+Instead of overloading the `run()` method in the timer class you
+can overload the `run()` function in a `Runnable` class and
+then register this class with the timer class. 
+Check out the demo `demo_runnable`.
 
 
 That's it. Enjoy!
