@@ -20,7 +20,7 @@ class DemoTimer2 : public CppTimer {
 };
 
 
-main( int argc, const char* argv[] ) {
+int main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
 	demoTimer1.start(250000000);
 	DemoTimer2 demoTimer2;
@@ -32,4 +32,5 @@ main( int argc, const char* argv[] ) {
 	do {
 		sleep(1);
 	} while (1);
+	return 0;
 }

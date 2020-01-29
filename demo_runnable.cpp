@@ -19,7 +19,7 @@ class Callback2 : public CppTimerCallback::Runnable {
 };
 
 
-main( int argc, const char* argv[] ) {
+int main( int argc, const char* argv[] ) {
 	CppTimerCallback demoTimer1;
 	Callback1 callback1;
 	demoTimer1.registerEventRunnable(callback1);
@@ -35,4 +35,5 @@ main( int argc, const char* argv[] ) {
 	do {
 		sleep(1);
 	} while (1);
+	return 0;
 }
