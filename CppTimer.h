@@ -70,6 +70,7 @@ public:
 			throw("Could not start timer");
 	}
 
+protected:
 	// is implemented by its children
 	// this is exectuted once "start" has been called
 	virtual void timerEvent() = 0;

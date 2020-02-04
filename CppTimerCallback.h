@@ -21,7 +21,7 @@ public:
 		cppTimerEventRunnable = NULL;
 	}
 	
-        virtual void timerEvent() {
+        void timerEvent() {
 		if (cppTimerEventRunnable) {
 			cppTimerEventRunnable->run();
 		}
