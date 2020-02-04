@@ -23,7 +23,7 @@ class CppTimer {
 
 private:
 
-	timer_t timerid;
+	timer_t timerid = 0;
 	struct sigevent sev;
 	struct sigaction sa;
 	struct itimerspec its;
@@ -51,12 +51,16 @@ public:
 		if (timer_create(CLOCKID, &sev, &timerid) == -1)
 			throw("Could not create timer");
 	};
-	
-	virtual ~CppTimer() {
+
+	void stop() {
 		// delete the timer
 		timer_delete(timerid);
 		// default action for signal handling
 		signal(SIG, SIG_IGN);
+	}
+	
+	virtual ~CppTimer() {
+		stop();
 	}
 
 	// start the timer
