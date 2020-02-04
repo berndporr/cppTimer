@@ -5,7 +5,7 @@
  * GNU GENERAL PUBLIC LICENSE
  * Version 3, 29 June 2007
  *
- * (C) 2018, Bernd Porr <mail@bernporr.me.uk>
+ * (C) 2020, Bernd Porr <mail@bernporr.me.uk>
  * 
  * This is inspired by the timer_create man page.
  **/
