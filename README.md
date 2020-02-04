@@ -1,9 +1,12 @@
 # CppTimer
 Generic C++ Timer for Linux
 
-It's a wrapper around the Linux timers
+It's a wrapper around the Linux timers. There are two ways of using
+the timer: by overloading the `timerEvent()` method in the `CppTimer` class
+itself (fastest) or by registering a callback class called `Runnable`
+with an overloaded `run()` method.
 
-## Usage
+## Usage (overloading the timer event)
 Include CppTimer.h in your program.
 
 ### Create the Timer class
@@ -31,6 +34,12 @@ then at the specified interval.
 
 To run `demo.cpp` just do `cmake .`, `make` and then `./demo`.
 
+## Callback version
+
+Instead of overloading the `run()` method in the timer class you can
+overload the `run()` method in the `Runnable` class and then register
+this class with the timer class.  Check out `demo_runnable` which
+demonstrates how to use this method.
 
 
 That's it. Enjoy!
