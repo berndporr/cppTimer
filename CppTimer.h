@@ -19,10 +19,46 @@
 #define CLOCKID CLOCK_MONOTONIC
 #define SIG SIGRTMIN
 
+/**
+ * Timer class which repeatedly fires. It's wrapper around the
+ * POSIX per-process timer.
+ **/
 class CppTimer {
 
-private:
+public:
+	/**
+	 * Creates an instance of the timer and connects the
+	 * signal handler to the timer.
+	 **/
+	CppTimer();
 
+	/**
+	 * Starts the timer. The timer fires first after
+	 * the specified time in nanoseconds and then at
+	 * that interval.
+	 **/
+	virtual void start(long nanosecs); 
+
+	/**
+	* Stops the timer by disarming it. It can be re-started
+	* with start().
+	**/
+	virtual void stop();
+
+	/**
+	 * Destructor disarms the timer, deletes it and
+	 * disconnect the signal handler.
+	 **/
+	virtual ~CppTimer();
+
+protected:
+	/**
+	 * Abstract function which needs to be implemented by the children.
+	 * This is called every time the timer fires.
+	 **/
+	virtual void timerEvent() = 0;
+
+private:
 	timer_t timerid = 0;
 	struct sigevent sev;
 	struct sigaction sa;
@@ -31,54 +67,6 @@ private:
 	static void handler(int sig, siginfo_t *si, void *uc ) {
 		(reinterpret_cast<CppTimer *> (si->si_value.sival_ptr))->timerEvent();
 	}
-
-public:
-	CppTimer() {
-		// We create a static handler catches the signal SIG
-		sa.sa_flags = SA_SIGINFO;
-		sa.sa_sigaction = handler;
-		sigemptyset(&sa.sa_mask);
-		if (sigaction(SIG, &sa, NULL) == -1)
-			throw("Could not create signal handler");
-		
-		// Create the timer
-		sev.sigev_notify = SIGEV_SIGNAL;
-		sev.sigev_signo = SIG;
-		// Cruical is that the signal carries the pointer to this class instance here
-		// because the handler just handles anything that comes in!
-		sev.sigev_value.sival_ptr = this;
-		// create the timer
-		if (timer_create(CLOCKID, &sev, &timerid) == -1)
-			throw("Could not create timer");
-	};
-
-	void stop() {
-		// delete the timer
-		timer_delete(timerid);
-		// default action for signal handling
-		signal(SIG, SIG_IGN);
-	}
-	
-	virtual ~CppTimer() {
-		stop();
-	}
-
-	// start the timer
-	void start(long nanosecs) {
-		// starts instantly
-		its.it_value.tv_sec = 0;
-		its.it_value.tv_nsec = 1;
-		its.it_interval.tv_sec = nanosecs / 1000000000;
-		its.it_interval.tv_nsec = nanosecs % 1000000000;
-		if (timer_settime(timerid, 0, &its, NULL) == -1)
-			throw("Could not start timer");
-	}
-
-protected:
-	// is implemented by its children
-	// this is exectuted once "start" has been called
-	virtual void timerEvent() = 0;
-	
 };
 
 
