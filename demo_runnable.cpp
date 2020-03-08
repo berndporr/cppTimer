@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "CppTimerCallback.h"
 #include <unistd.h>
-
+#include <thread>
 
 class Callback1 : public CppTimerCallback::Runnable {
 	void run() {
@@ -13,7 +13,7 @@ class Callback1 : public CppTimerCallback::Runnable {
 
 class Callback2 : public CppTimerCallback::Runnable {
 	void run() {
-		fprintf(stdout,"Buh! ");
+		fprintf(stdout,"Buh! \n");
 		fflush(stdout);
 	}
 };
@@ -29,11 +29,10 @@ int main( int argc, const char* argv[] ) {
 	demoTimer2.registerEventRunnable(callback2);
 	demoTimer2.start(10000000);
 
-	// do nothing and keep sleeping
-	// we need the loop because the sleep
-	// will be interrupted by the timers
-	do {
-		sleep(1);
-	} while (1);
-	return 0;
+
+	// do nothing and keep sleeping for 2 secs
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	printf("\n");
+
 }
