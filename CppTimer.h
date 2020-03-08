@@ -48,7 +48,7 @@ public:
 	 * the timer fires once after the specified time in
 	 * nanoseconds.
 	 **/
-	virtual void start(long nanosecs, cppTimerType_t); 
+	virtual void start(long nanosecs, cppTimerType_t type = PERIODIC); 
 
 	/**
 	* Stops the timer by disarming it. It can be re-started
