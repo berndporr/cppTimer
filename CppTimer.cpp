@@ -28,12 +28,23 @@ CppTimer::CppTimer() {
 		throw("Could not create timer");
 };
 
-void CppTimer::start(long nanosecs) {
-	// starts instantly
-	its.it_value.tv_sec = nanosecs / 1000000000;
-	its.it_value.tv_nsec = nanosecs % 1000000000;
-	its.it_interval.tv_sec = nanosecs / 1000000000;
-	its.it_interval.tv_nsec = nanosecs % 1000000000;
+void CppTimer::start(long nanosecs, cppTimerType_t type) {
+	switch(type){
+		case(PERIODIC):
+			//starts after specified period of nanoseconds
+			its.it_value.tv_sec = nanosecs / 1000000000;
+			its.it_value.tv_nsec = nanosecs % 1000000000;
+			its.it_interval.tv_sec = nanosecs / 1000000000;
+			its.it_interval.tv_nsec = nanosecs % 1000000000;
+			break;
+		case(ONESHOT):
+			//fires once after specified period of nanoseconds
+			its.it_value.tv_sec = nanosecs / 1000000000;
+			its.it_value.tv_nsec = nanosecs % 1000000000;
+			its.it_interval.tv_sec = 0;
+			its.it_interval.tv_nsec = 0;
+			break;
+	}
 	if (timer_settime(timerid, 0, &its, NULL) == -1)
 		throw("Could not start timer");
 }
