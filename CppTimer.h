@@ -19,6 +19,15 @@
 #define CLOCKID CLOCK_MONOTONIC
 #define SIG SIGRTMIN
 
+
+/**
+ * Enumeration of CppTimer types
+ **/	
+typedef enum cppTimerType_t{
+	PERIODIC,
+	ONESHOT
+}cppTimerType_t;
+
 /**
  * Timer class which repeatedly fires. It's wrapper around the
  * POSIX per-process timer.
@@ -35,9 +44,11 @@ public:
 	/**
 	 * Starts the timer. The timer fires first after
 	 * the specified time in nanoseconds and then at
-	 * that interval.
+	 * that interval in PERIODIC mode. In ONESHOT mode
+	 * the timer fires once after the specified time in
+	 * nanoseconds.
 	 **/
-	virtual void start(long nanosecs); 
+	virtual void start(long nanosecs, cppTimerType_t); 
 
 	/**
 	* Stops the timer by disarming it. It can be re-started
