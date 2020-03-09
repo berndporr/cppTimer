@@ -18,7 +18,7 @@ Include CppTimer.h in your program and link the static library `libcpptimer.a`
 to your project:
 
 ```
-TARGET_LINK_LIBRARIES(your_project_title cpptimer)
+TARGET_LINK_LIBRARIES(your_project_title cpptimer rt)
 ```
 
 ### Create the Timer class
