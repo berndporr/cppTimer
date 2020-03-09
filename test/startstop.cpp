@@ -17,13 +17,11 @@ int main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
 	demoTimer1.start(250000000);
 
-	// do nothing and keep sleeping
-	// we need the loop because the sleep
-	// will be interrupted by the timers
-
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	demoTimer1.stop();
+
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	
 	demoTimer1.start(25000000);
 

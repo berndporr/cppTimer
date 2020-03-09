@@ -29,7 +29,6 @@ int main( int argc, const char* argv[] ) {
 	demoTimer2.registerEventRunnable(callback2);
 	demoTimer2.start(10000000);
 
-
 	// do nothing and keep sleeping for 2 secs
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 

@@ -7,7 +7,12 @@ itself (fastest) or by registering a callback class called `Runnable`
 with an overloaded `run()` method.
 
 ## Usage (overloading the timer event)
-Include CppTimer.h in your program.
+Include CppTimer.h in your program and link the static library `libcpptimer.a`
+to your project:
+
+```
+TARGET_LINK_LIBRARIES(your_project_title cpptimer)
+```
 
 ### Create the Timer class
 ```
@@ -40,6 +45,14 @@ Instead of overloading the `run()` method in the timer class you can
 overload the `run()` method in the `Runnable` class and then register
 this class with the timer class.  Check out `demo_runnable` which
 demonstrates how to use this method.
+
+## Unit tests
+
+Run:
+
+```
+ctest
+```
 
 
 That's it. Enjoy!
