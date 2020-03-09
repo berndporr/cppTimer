@@ -6,6 +6,13 @@ the timer: by overloading the `timerEvent()` method in the `CppTimer` class
 itself (fastest) or by registering a callback class called `Runnable`
 with an overloaded `run()` method.
 
+## Installation
+```
+cmake .
+make
+sudo make install
+```
+
 ## Usage (overloading the timer event)
 Include CppTimer.h in your program and link the static library `libcpptimer.a`
 to your project:
