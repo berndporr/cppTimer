@@ -31,7 +31,13 @@ int main( int argc, const char* argv[] ) {
 
 	// do nothing and keep sleeping for 2 secs
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-
+	
+	demoTimer1.unregisterEventRunnable();
+        demoTimer1.stop();
+	
+	demoTimer2.unregisterEventRunnable();
+        demoTimer2.stop();
+	
 	printf("\n");
 
 }
