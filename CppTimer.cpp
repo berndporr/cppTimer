@@ -50,7 +50,24 @@ void CppTimer::start(long nanosecs, cppTimerType_t type) {
 }
 
 void CppTimer::startSeconds(long secs, cppTimerType_t type){
-	start(secs*1000000000, type);
+	switch(type){
+		case(PERIODIC):
+			//starts after specified period of seconds
+			its.it_value.tv_sec = secs;
+			its.it_value.tv_nsec = 0;
+			its.it_interval.tv_sec = secs;
+			its.it_interval.tv_nsec =0;
+			break;
+		case(ONESHOT):
+			//fires once after specified period of seconds
+			its.it_value.tv_sec = secs;
+			its.it_value.tv_nsec = 0;
+			its.it_interval.tv_sec = 0;
+			its.it_interval.tv_nsec = 0;
+			break;
+	}
+	if (timer_settime(timerid, 0, &its, NULL) == -1)
+		throw("Could not start timer");
 }
 
 void CppTimer::stop() {
