@@ -49,6 +49,10 @@ void CppTimer::start(long nanosecs, cppTimerType_t type) {
 		throw("Could not start timer");
 }
 
+void CppTimer::startSeconds(long secs, cppTimerType_t type){
+	start(secs*1000000000, type);
+}
+
 void CppTimer::stop() {
 	// disarm
 	struct itimerspec itsnew;

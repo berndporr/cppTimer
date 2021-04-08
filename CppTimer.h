@@ -51,6 +51,14 @@ public:
 	virtual void start(long nanosecs, cppTimerType_t type = PERIODIC); 
 
 	/**
+	 * Starts the timer. The timer fires first after
+	 * the specified time in seconds and then at
+	 * that interval in PERIODIC mode. In ONESHOT mode
+	 * the timer fires once after the specified time in
+	 * seconds.
+	 **/
+	virtual void startSeconds(long secs, cppTimerType_t type = PERIODIC); 
+/**
 	* Stops the timer by disarming it. It can be re-started
 	* with start().
 	**/
