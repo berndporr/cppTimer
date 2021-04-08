@@ -11,9 +11,9 @@ public:
 		fprintf(stdout,"1");
 		fflush(stdout);
 	}
-	void start(long nanosecs) {
+	void start(long millisecs) {
 		counter = 0;
-		CppTimer::start(nanosecs);
+		CppTimer::start(millisecs);
 	}
 	int getCounter() {return counter;}
 private:
@@ -41,17 +41,17 @@ public:
 
 int main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
-	demoTimer1.startSeconds(0.1);
+	demoTimer1.startms(100);
 	DemoTimer2 demoTimer2(&demoTimer1);
-	demoTimer2.startSeconds(0.2);
+	demoTimer2.startms(200);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	demoTimer1.stop();
 	demoTimer2.stop();
 	
-	demoTimer1.startSeconds(0.025);
-	demoTimer2.startSeconds(0.1);
+	demoTimer1.startms(25);
+	demoTimer2.startms(100);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 

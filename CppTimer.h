@@ -52,13 +52,14 @@ public:
 
 	/**
 	 * Starts the timer. The timer fires first after
-	 * the specified time in seconds and then at
+	 * the specified time in milliseconds and then at
 	 * that interval in PERIODIC mode. In ONESHOT mode
 	 * the timer fires once after the specified time in
-	 * seconds.
+	 * milliseconds.
 	 **/
-	virtual void startSeconds(long secs, cppTimerType_t type = PERIODIC); 
-/**
+	virtual void startms(long millisecs, cppTimerType_t type = PERIODIC); 
+
+	/**
 	* Stops the timer by disarming it. It can be re-started
 	* with start().
 	**/

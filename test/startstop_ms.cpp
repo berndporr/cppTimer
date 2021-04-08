@@ -15,7 +15,7 @@ class DemoTimer1 : public CppTimer {
 
 int main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
-	demoTimer1.startSeconds(0.25);
+	demoTimer1.startms(500);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -23,9 +23,9 @@ int main( int argc, const char* argv[] ) {
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	
-	demoTimer1.startSeconds(0.25);
+	demoTimer1.startms(1500);
 
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	demoTimer1.stop();
 	
