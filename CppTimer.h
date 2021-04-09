@@ -21,10 +21,10 @@
 /**
  * Enumeration of CppTimer types
  **/	
-typedef enum cppTimerType_t{
+enum cppTimerType_t {
 	PERIODIC,
 	ONESHOT
-}cppTimerType_t;
+};
 
 /**
  * Timer class which repeatedly fires. It's wrapper around the
