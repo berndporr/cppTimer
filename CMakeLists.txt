@@ -4,6 +4,7 @@ enable_testing()
 project (demo)
 add_executable(demo demo.cpp)
 set (CMAKE_CXX_STANDARD 11)
+add_compile_options(-Wall -Wconversion -Wextra -pedantic)
 TARGET_LINK_LIBRARIES(demo cpptimer)
 
 add_library(cpptimer STATIC CppTimer.cpp)

@@ -13,7 +13,7 @@ class DemoTimer1 : public CppTimer {
 };
 
 
-int main( int argc, const char* argv[] ) {
+int main( int, const char** ) {
 	DemoTimer1 demoTimer1;
 	demoTimer1.startms(500);
 

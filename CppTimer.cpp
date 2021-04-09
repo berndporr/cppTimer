@@ -26,7 +26,7 @@ CppTimer::CppTimer() {
 	// create the timer
 	if (timer_create(CLOCKID, &sev, &timerid) == -1)
 		throw("Could not create timer");
-};
+}
 
 void CppTimer::start(long nanosecs, cppTimerType_t type) {
 	switch(type){

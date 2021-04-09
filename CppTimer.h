@@ -84,7 +84,7 @@ private:
 	struct sigaction sa;
 	struct itimerspec its;
 		
-	static void handler(int sig, siginfo_t *si, void *uc ) {
+	static void handler(int, siginfo_t *si, void*) {
 		(reinterpret_cast<CppTimer *> (si->si_value.sival_ptr))->timerEvent();
 	}
 };
