@@ -9,17 +9,17 @@
  * This is inspired by the timer_create man page.
  **/
 
-CppTimer::CppTimer() {
+CppTimer::CppTimer(const int signo) {
 	// We create a static handler catches the signal SIG
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = handler;
 	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIG, &sa, NULL) == -1)
+	if (sigaction(signo, &sa, NULL) == -1)
 		throw("Could not create signal handler");
 	
 	// Create the timer
 	sev.sigev_notify = SIGEV_SIGNAL;
-	sev.sigev_signo = SIG;
+	sev.sigev_signo = signo;
 	// Cruical is that the signal carries the pointer to this class instance here
 	// because the handler just handles anything that comes in!
 	sev.sigev_value.sival_ptr = this;
@@ -85,5 +85,5 @@ CppTimer::~CppTimer() {
 	// delete the timer
 	timer_delete(timerid);
 	// default action for signal handling
-	signal(SIG, SIG_IGN);
+	signal(sev.sigev_signo, SIG_IGN);
 }

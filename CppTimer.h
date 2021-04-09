@@ -17,8 +17,6 @@
 #include <time.h>
 
 #define CLOCKID CLOCK_MONOTONIC
-#define SIG SIGRTMIN
-
 
 /**
  * Enumeration of CppTimer types
@@ -37,9 +35,11 @@ class CppTimer {
 public:
 	/**
 	 * Creates an instance of the timer and connects the
-	 * signal handler to the timer.
+	 * signal handler to the timer. The default signal which
+	 * is being used is SIGRTMIN but can be changed to other
+	 * signals if other processes / threads use them.
 	 **/
-	CppTimer();
+	CppTimer(const int signo = SIGRTMIN);
 
 	/**
 	 * Starts the timer. The timer fires first after
