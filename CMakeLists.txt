@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 3.1.0)
 include(GNUInstallDirs)
 enable_testing()
 project (demo)
