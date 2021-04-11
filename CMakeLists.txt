@@ -9,6 +9,7 @@ TARGET_LINK_LIBRARIES(demo cpptimer)
 
 add_library(cpptimer STATIC CppTimer.cpp)
 TARGET_LINK_LIBRARIES(cpptimer rt)
+set_target_properties(cpptimer PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 add_executable(demo_runnable demo_runnable.cpp)
 TARGET_LINK_LIBRARIES(demo_runnable cpptimer)
