@@ -23,21 +23,21 @@ int main( int, const char**) {
 	CppTimerCallback demoTimer1;
 	Callback1 callback1;
 	demoTimer1.registerEventRunnable(callback1);
-	demoTimer1.startns(2500000);
+	demoTimer1.startns(250000000);
 	CppTimerCallback demoTimer2;
 	Callback2 callback2;
 	demoTimer2.registerEventRunnable(callback2);
-	demoTimer2.startns(10000000);
+	demoTimer2.startms(1000);
 
 	// do nothing and keep sleeping for 2 secs
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	
+
 	demoTimer1.unregisterEventRunnable();
         demoTimer1.stop();
-	
+
 	demoTimer2.unregisterEventRunnable();
         demoTimer2.stop();
-	
+
 	printf("\n");
 
 }
