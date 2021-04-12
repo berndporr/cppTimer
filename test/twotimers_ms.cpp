@@ -13,7 +13,7 @@ public:
 	}
 	void start(long millisecs) {
 		counter = 0;
-		CppTimer::start(millisecs);
+		CppTimer::startms(millisecs);
 	}
 	int getCounter() {return counter;}
 private:

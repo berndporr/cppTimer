@@ -28,7 +28,7 @@ CppTimer::CppTimer(const int signo) {
 		throw("Could not create timer");
 }
 
-void CppTimer::start(long nanosecs, cppTimerType_t type) {
+void CppTimer::startns(long nanosecs, cppTimerType_t type) {
 	switch(type){
 		case(PERIODIC):
 			//starts after specified period of nanoseconds

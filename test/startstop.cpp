@@ -15,7 +15,7 @@ class DemoTimer1 : public CppTimer {
 
 int main( int, const char** ) {
 	DemoTimer1 demoTimer1;
-	demoTimer1.start(250000000);
+	demoTimer1.startns(250000000);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -23,7 +23,7 @@ int main( int, const char** ) {
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	
-	demoTimer1.start(25000000);
+	demoTimer1.startns(25000000);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 

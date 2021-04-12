@@ -24,9 +24,9 @@ class DemoTimer2 : public CppTimer {
 
 int main( int argc, const char* argv[] ) {
 	DemoTimer1 demoTimer1;
-	demoTimer1.start(250000000);
+	demoTimer1.startms(250);
 	DemoTimer2 demoTimer2;
-	demoTimer2.start(1000000000);
+	demoTimer2.startms(1000);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
@@ -35,8 +35,8 @@ int main( int argc, const char* argv[] ) {
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	
-	demoTimer1.start(25000000);
-	demoTimer2.start(100000000);
+	demoTimer1.startns(25000000);
+	demoTimer2.startns(100000000);
 
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 

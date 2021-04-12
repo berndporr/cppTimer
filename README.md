@@ -33,11 +33,16 @@ class MyTimer : public CppTimer {
 where you override `timerEvent` with your function.
 
 ### Run the Timer class
-The timer is programmed in nanoseconds.
+The timer is programmed in nanoseconds:
 ```
 	MyTimer myTimer;
 	// every 500000ns
-	myTimer.start(500000);
+	myTimer.startns(500000);
+```
+or milliseconds:
+```
+	// every 200ms
+	myTimer.startms(200);
 ```
 As soon as start returns the timer fires instantly and
 then at the specified interval.
