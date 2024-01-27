@@ -1,36 +1,41 @@
 #include "CppTimer.h"
+#include <sys/timerfd.h>
 
 /**
  * GNU GENERAL PUBLIC LICENSE
  * Version 3, 29 June 2007
  *
- * (C) 2020-2021, Bernd Porr <mail@bernporr.me.uk>
+ * (C) 2020-2024, Bernd Porr <mail@bernporr.me.uk>
  * 
- * This is inspired by the timer_create man page.
+ * This is inspired by the timerfd_create man page.
  **/
 
-CppTimer::CppTimer(const int signo)
-{
-	// We create a static handler catches the signal SIG
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = handler;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(signo, &sa, NULL) == -1)
-		throw("Could not create signal handler");
-
-	// Create the timer
-	sev.sigev_notify = SIGEV_SIGNAL;
-	sev.sigev_signo = signo;
-	// Cruical is that the signal carries the pointer to this class instance here
-	// because the handler just handles anything that comes in!
-	sev.sigev_value.sival_ptr = this;
-	// create the timer
-	if (timer_create(CLOCKID, &sev, &timerid) == -1)
-		throw("Could not create timer");
+void CppTimer::worker() {
+	running = true;
+	while (running) {
+		uint64_t exp;
+		const long int s = read(fd, &exp, sizeof(uint64_t));
+		if (s != sizeof(uint64_t) ) {
+			running = false;
+			return;
+		}
+		timerEvent();
+	}
+	// disarm
+	struct itimerspec itsnew;
+	itsnew.it_value.tv_sec = 0;
+	itsnew.it_value.tv_nsec = 0;
+	itsnew.it_interval.tv_sec = 0;
+	itsnew.it_interval.tv_nsec = 0;
+	timerfd_settime(fd, 0, &itsnew, &its);
+	close(fd);
+	fd = -1;
 }
 
 void CppTimer::startns(long nanosecs, cppTimerType_t type)
 {
+	if (running) return;
+	fd = timerfd_create(CLOCKID, 0);
 	switch (type)
 	{
 	case (PERIODIC):
@@ -48,12 +53,15 @@ void CppTimer::startns(long nanosecs, cppTimerType_t type)
 		its.it_interval.tv_nsec = 0;
 		break;
 	}
-	if (timer_settime(timerid, 0, &its, NULL) == -1)
+	if (timerfd_settime(fd, 0, &its, NULL) == -1)
 		throw("Could not start timer");
+	uthread = std::thread(&CppTimer::worker,this);
 }
 
 void CppTimer::startms(long millisecs, cppTimerType_t type)
 {
+	if (running) return;
+	fd = timerfd_create(CLOCKID, 0);
 	switch (type)
 	{
 	case (PERIODIC):
@@ -71,26 +79,19 @@ void CppTimer::startms(long millisecs, cppTimerType_t type)
 		its.it_interval.tv_nsec = 0;
 		break;
 	}
-	if (timer_settime(timerid, 0, &its, NULL) == -1)
+	if (timerfd_settime(fd, 0, &its, NULL) == -1)
 		throw("Could not start timer");
+	uthread = std::thread(&CppTimer::worker,this);
 }
 
 void CppTimer::stop()
 {
-	// disarm
-	struct itimerspec itsnew;
-	itsnew.it_value.tv_sec = 0;
-	itsnew.it_value.tv_nsec = 0;
-	itsnew.it_interval.tv_sec = 0;
-	itsnew.it_interval.tv_nsec = 0;
-	timer_settime(timerid, 0, &itsnew, &its);
+	if (!running) return;
+	running = false;
+	uthread.join();
 }
 
 CppTimer::~CppTimer()
 {
 	stop();
-	// delete the timer
-	timer_delete(timerid);
-	// default action for signal handling
-	signal(sev.sigev_signo, SIG_IGN);
 }

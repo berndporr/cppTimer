@@ -5,7 +5,7 @@
  * GNU GENERAL PUBLIC LICENSE
  * Version 3, 29 June 2007
  *
- * (C) 2020-2021, Bernd Porr <mail@bernporr.me.uk>
+ * (C) 2020-2024, Bernd Porr <mail@bernporr.me.uk>
  * 
  * This is inspired by the timer_create man page.
  **/
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <time.h>
+#include <thread>
 
 #define CLOCKID CLOCK_MONOTONIC
 
@@ -35,15 +36,6 @@ class CppTimer
 {
 
 public:
-	/**
-	 * Creates an instance of the timer and connects the
-	 * signal handler to the timer. The default signal which
-	 * is being used is SIGRTMIN but can be changed to other
-	 * signals if other processes / threads use them.
-	 * @param signo The signal used by the timer.
-	 **/
-	CppTimer(const int signo = SIGRTMIN);
-
 	/**
 	 * Starts the timer. The timer fires first after
 	 * the specified time in nanoseconds and then at
@@ -86,15 +78,11 @@ protected:
 	virtual void timerEvent() = 0;
 
 private:
-	timer_t timerid = 0;
-	struct sigevent sev;
-	struct sigaction sa;
+	int fd = 0;
 	struct itimerspec its;
-
-	inline static void handler(int, siginfo_t *si, void *)
-	{
-		(reinterpret_cast<CppTimer *>(si->si_value.sival_ptr))->timerEvent();
-	}
+	bool running = false;
+	std::thread uthread;
+	void worker();
 };
 
 #endif
