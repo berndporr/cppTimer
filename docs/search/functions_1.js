@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['startms',['startms',['../classCppTimer.html#a8054cc8cead2e360b06b6ff99cc964cf',1,'CppTimer']]],
-  ['startns',['startns',['../classCppTimer.html#a7de6bd2c8c9b5daa70d5c3d9b97fa49b',1,'CppTimer']]],
-  ['stop',['stop',['../classCppTimer.html#aafb86e2bb43311bf154867dd6da43e80',1,'CppTimer']]]
+  ['timerevent_14',['timerEvent',['../classCppTimer.html#ac2665403595b6aee5f581d0ebfeb886c',1,'CppTimer::timerEvent()'],['../classCppTimerCallback.html#af6b39f5eb8e98bfc1b301ac3f25276e9',1,'CppTimerCallback::timerEvent()']]]
 ];

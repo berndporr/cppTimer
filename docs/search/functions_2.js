@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timerevent',['timerEvent',['../classCppTimer.html#ac2665403595b6aee5f581d0ebfeb886c',1,'CppTimer::timerEvent()'],['../classCppTimerCallback.html#af6b39f5eb8e98bfc1b301ac3f25276e9',1,'CppTimerCallback::timerEvent()']]]
+  ['_7ecpptimer_15',['~CppTimer',['../classCppTimer.html#a2942aab831713273a76218048fe61b16',1,'CppTimer']]]
 ];
