@@ -22,7 +22,7 @@ class DemoTimer2 : public CppTimer {
 
 
 
-int main( int argc, const char* argv[] ) {
+int main( int, const char**) {
 	DemoTimer1 demoTimer1;
 	demoTimer1.startms(250);
 	DemoTimer2 demoTimer2;

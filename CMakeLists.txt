@@ -1,15 +1,20 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.6)
+
+project (CppTimer
+  DESCRIPTION "Wrapper for Linux timers"
+  LANGUAGES CXX)
+
+set (CMAKE_CXX_STANDARD 17)
+add_compile_options(-Wall -Wconversion -Wextra -pedantic)
 include(GNUInstallDirs)
 enable_testing()
-project (CppTimer)
-add_executable(demo demo.cpp)
-set (CMAKE_CXX_STANDARD 11)
-add_compile_options(-Wall -Wconversion -Wextra -pedantic)
-TARGET_LINK_LIBRARIES(demo cpptimer)
 
 add_library(cpptimer STATIC CppTimer.cpp)
 TARGET_LINK_LIBRARIES(cpptimer rt)
 set_target_properties(cpptimer PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+
+add_executable(demo demo.cpp)
+TARGET_LINK_LIBRARIES(demo cpptimer)
 
 add_executable(demo_runnable demo_runnable.cpp)
 TARGET_LINK_LIBRARIES(demo_runnable cpptimer)
