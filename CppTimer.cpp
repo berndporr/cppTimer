@@ -10,32 +10,12 @@
  * This is inspired by the timerfd_create man page.
  **/
 
-void CppTimer::worker() {
-	running = true;
-	while (running) {
-		uint64_t exp;
-		const long int s = read(fd, &exp, sizeof(uint64_t));
-		if (s != sizeof(uint64_t) ) {
-			running = false;
-			return;
-		}
-		timerEvent();
-	}
-	// disarm
-	struct itimerspec itsnew;
-	itsnew.it_value.tv_sec = 0;
-	itsnew.it_value.tv_nsec = 0;
-	itsnew.it_interval.tv_sec = 0;
-	itsnew.it_interval.tv_nsec = 0;
-	timerfd_settime(fd, 0, &itsnew, &its);
-	close(fd);
-	fd = -1;
-}
-
 void CppTimer::startns(long nanosecs, cppTimerType_t type)
 {
 	if (running) return;
-	fd = timerfd_create(CLOCKID, 0);
+	fd = timerfd_create(CLOCK_MONOTONIC, 0);
+	if (fd < 0)
+		throw("Could not start timer");
 	switch (type)
 	{
 	case (PERIODIC):
@@ -61,7 +41,9 @@ void CppTimer::startns(long nanosecs, cppTimerType_t type)
 void CppTimer::startms(long millisecs, cppTimerType_t type)
 {
 	if (running) return;
-	fd = timerfd_create(CLOCKID, 0);
+	fd = timerfd_create(CLOCK_MONOTONIC, 0);
+	if (fd < 0)
+		throw("Could not start timer");
 	switch (type)
 	{
 	case (PERIODIC):
@@ -82,6 +64,28 @@ void CppTimer::startms(long millisecs, cppTimerType_t type)
 	if (timerfd_settime(fd, 0, &its, NULL) == -1)
 		throw("Could not start timer");
 	uthread = std::thread(&CppTimer::worker,this);
+}
+
+void CppTimer::worker() {
+	running = true;
+	while (running) {
+		uint64_t exp;
+		const long int s = read(fd, &exp, sizeof(uint64_t));
+		if (s != sizeof(uint64_t) ) {
+			running = false;
+			return;
+		}
+		timerEvent();
+	}
+	// disarm
+	struct itimerspec itsnew;
+	itsnew.it_value.tv_sec = 0;
+	itsnew.it_value.tv_nsec = 0;
+	itsnew.it_interval.tv_sec = 0;
+	itsnew.it_interval.tv_nsec = 0;
+	timerfd_settime(fd, 0, &itsnew, &its);
+	close(fd);
+	fd = -1;
 }
 
 void CppTimer::stop()
