@@ -9,9 +9,7 @@ add_compile_options(-Wall -Wconversion -Wextra -pedantic)
 include(GNUInstallDirs)
 enable_testing()
 
-add_library(cpptimer STATIC CppTimer.cpp)
-TARGET_LINK_LIBRARIES(cpptimer rt)
-set_target_properties(cpptimer PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+add_library(cpptimer INTERFACE)
 
 add_executable(demo demo.cpp)
 TARGET_LINK_LIBRARIES(demo cpptimer)

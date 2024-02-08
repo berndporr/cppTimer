@@ -16,8 +16,7 @@ sudo make install
 ## Usage (overloading the timer event)
 The doxygen generated online docs are here: https://berndporr.github.io/cppTimer/
 
-Include `CppTimer.h` in your program and link the static library `libcpptimer.a`
-to your project:
+Include `CppTimer.h` in your program. That's it.
 ```
 TARGET_LINK_LIBRARIES(your_project_title cpptimer rt)
 ```
