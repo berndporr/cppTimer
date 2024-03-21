@@ -44,8 +44,8 @@ public:
      * @param type Either PERIODIC or ONESHOT
      **/
     virtual void startns(long nanosecs, cppTimerType_t t = PERIODIC) {
-	if (running) return;
 	if (uthread.joinable()) uthread.join();
+	if (running) return;
 	timerType = t;
 	if (fd < 0)
 	    throw("Could not start timer");
@@ -81,8 +81,8 @@ public:
      * @param type Either PERIODIC or ONESHOT
      **/
     virtual void startms(long millisecs, cppTimerType_t t = PERIODIC) {
-	if (running) return;
 	if (uthread.joinable()) uthread.join();
+	if (running) return;
 	timerType = t;
 	if (fd < 0)
 	    throw("Could not start timer");
