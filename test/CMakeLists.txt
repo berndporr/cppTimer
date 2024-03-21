@@ -19,3 +19,7 @@ add_test(TestStartStop_ms test_startstop_ms)
 add_executable (test_twotimers_ms twotimers_ms.cpp)
 TARGET_LINK_LIBRARIES(test_twotimers_ms cpptimer)
 add_test(TestTwotimers_ms test_twotimers_ms)
+
+add_executable (test_oneshot oneshot.cpp)
+TARGET_LINK_LIBRARIES(test_oneshot cpptimer)
+add_test(TestOneShot test_oneshot)
