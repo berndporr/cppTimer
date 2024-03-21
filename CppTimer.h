@@ -43,12 +43,12 @@ public:
      * @param nanosecs Time in nanoseconds
      * @param type Either PERIODIC or ONESHOT
      **/
-    virtual void startns(long nanosecs, cppTimerType_t type = PERIODIC) {
+    virtual void startns(long nanosecs, cppTimerType_t t = PERIODIC) {
 	if (running) return;
-	fd = timerfd_create(CLOCK_MONOTONIC, 0);
+	timerType = t;
 	if (fd < 0)
 	    throw("Could not start timer");
-	switch (type)
+	switch (timerType)
 	{
 	case (PERIODIC):
 	    //starts after specified period of nanoseconds
@@ -79,12 +79,12 @@ public:
      * @param millisecs Time in milliseconds
      * @param type Either PERIODIC or ONESHOT
      **/
-    virtual void startms(long millisecs, cppTimerType_t type = PERIODIC) {
+    virtual void startms(long millisecs, cppTimerType_t t = PERIODIC) {
 	if (running) return;
-	fd = timerfd_create(CLOCK_MONOTONIC, 0);
+	timerType = t;
 	if (fd < 0)
 	    throw("Could not start timer");
-	switch (type)
+	switch (timerType)
 	{
 	case (PERIODIC):
 	    //starts after specified period of milliseconds
@@ -111,9 +111,8 @@ public:
      * with start().
      **/
     virtual void stop() {
-	if (!running) return;
 	running = false;
-	uthread.join();
+	if (uthread.joinable()) uthread.join();
     }
 
     /**
@@ -122,6 +121,7 @@ public:
      **/
     virtual ~CppTimer() {
 	stop();
+	close(fd);
     }
 
 protected:
@@ -132,7 +132,8 @@ protected:
     virtual void timerEvent() = 0;
 
 private:
-    int fd = 0;
+    cppTimerType_t timerType;
+    const int fd = timerfd_create(CLOCK_MONOTONIC, 0);
     struct itimerspec its;
     bool running = false;
     std::thread uthread;
@@ -142,10 +143,11 @@ private:
 	    uint64_t exp;
 	    const long int s = read(fd, &exp, sizeof(uint64_t));
 	    if (s != sizeof(uint64_t) ) {
-		running = false;
-		return;
+		fprintf(stderr,"Periodic timer didn't work.");
+		throw "Periodic timer didn't work.";
 	    }
 	    timerEvent();
+	    if (ONESHOT == timerType) running = false;
 	}
 	// disarm
 	struct itimerspec itsnew;
@@ -154,8 +156,6 @@ private:
 	itsnew.it_interval.tv_sec = 0;
 	itsnew.it_interval.tv_nsec = 0;
 	timerfd_settime(fd, 0, &itsnew, &its);
-	close(fd);
-	fd = -1;
     }
 };
 

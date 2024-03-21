@@ -22,11 +22,22 @@ class DemoTimer2 : public CppTimer {
 
 
 
+class DemoTimer3 : public CppTimer {
+
+	void timerEvent() {
+		fprintf(stdout,"Booom!!!!!!\n");
+	}
+};
+
+
+
 int main( int, const char**) {
 	DemoTimer1 demoTimer1;
 	demoTimer1.startms(250);
 	DemoTimer2 demoTimer2;
 	demoTimer2.startms(1000);
+	DemoTimer3 demoTimer3;
+	demoTimer3.startms(1000,ONESHOT);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
