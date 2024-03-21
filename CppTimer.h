@@ -143,8 +143,7 @@ private:
 	    uint64_t exp;
 	    const long int s = read(fd, &exp, sizeof(uint64_t));
 	    if (s != sizeof(uint64_t) ) {
-		fprintf(stderr,"Periodic timer didn't work.");
-		throw "Periodic timer didn't work.";
+		throw "Timer didn't work.";
 	    }
 	    timerEvent();
 	    if (ONESHOT == timerType) running = false;
