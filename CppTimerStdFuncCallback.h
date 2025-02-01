@@ -4,6 +4,7 @@
 #include "CppTimer.h"
 #include <unistd.h>
 #include <functional>
+#include <vector>
 
 // This is a demo how to create a callback with std::function which allows
 // calling methods in other classes by registering a lambda function!
@@ -15,17 +16,17 @@ public:
     using CallbackFunction = std::function<void(void)>;
 
     void registerEventCallback(CallbackFunction cf) {
-	callbackFunction = cf;
+	callbackFunctions.push_back(cf);
     }
     
     void timerEvent() {
-	if (nullptr != callbackFunction) {
-	    callbackFunction();
+	for(auto &cb : callbackFunctions) {
+	    cb();
 	}
     }
 
 private:
-    CallbackFunction callbackFunction = nullptr;
+    std::vector<CallbackFunction> callbackFunctions;
 };
 
 
