@@ -4,6 +4,8 @@
 #include "CppTimer.h"
 #include <unistd.h>
 
+// Demo which creates a callback interface as the abstract class "Runnable".
+// This then allows to register a callback.
 
 class CppTimerCallback : public CppTimer {
 

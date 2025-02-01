@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <thread>
 
+// Demo which shows how to register a callback via a lambda function.
+// The method run() in the receiving classes below is called from the class CppTimerCallback.
+
 class ReceiverClass1 {
 public:
     void run() {

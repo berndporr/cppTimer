@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <functional>
 
+// This is a demo how to create a callback with std::function which allows
+// calling methods in other classes by registering a lambda function!
+
 class CppTimerCallback : public CppTimer {
 
 public:
