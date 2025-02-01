@@ -17,6 +17,10 @@ TARGET_LINK_LIBRARIES(demo cpptimer)
 add_executable(demo_runnable demo_runnable.cpp)
 TARGET_LINK_LIBRARIES(demo_runnable cpptimer)
 
+add_executable(demo_stdfunccallback demo_stdfunccallback.cpp)
+TARGET_LINK_LIBRARIES(demo_stdfunccallback cpptimer)
+
+
 add_subdirectory(test)
 
 set_target_properties(cpptimer PROPERTIES
