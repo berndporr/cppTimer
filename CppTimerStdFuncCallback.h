@@ -19,7 +19,7 @@ public:
     }
     
     void timerEvent() {
-	if (!(callbackFunction == nullptr)) {
+	if (nullptr != callbackFunction) {
 	    callbackFunction();
 	}
     }

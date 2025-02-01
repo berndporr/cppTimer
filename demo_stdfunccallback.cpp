@@ -18,7 +18,7 @@ public:
 class ReceiverClass2 {
 public:
     void run() {
-	fprintf(stdout,"Buh! \n");
+	fprintf(stdout,"BUH! \n");
 	fflush(stdout);
     }
 };
