@@ -51,12 +51,19 @@ then at the specified interval.
 
 To run `demo.cpp` just do `cmake .`, `make` and then `./demo`.
 
-## Callback version
+## Callback interface version
 
 Instead of overloading the `run()` method in the timer class you can
 overload the `run()` method in the `Runnable` class and then register
 this class with the timer class.  Check out `demo_runnable` which
 demonstrates how to use this method.
+
+## Callback via lambda function
+
+Here, the callback is established with the help of a lambda function
+instead of a callback interface. This allows direct registering
+of a method of the receiving class but one needs to get used to the
+lambda function syntax.
 
 ## Unit tests
 
