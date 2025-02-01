@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    CallbackFunction callbackFunction;
+    CallbackFunction callbackFunction = nullptr;
 };
 
 
