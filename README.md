@@ -1,10 +1,15 @@
 # CppTimer
 Generic C++ Timer for Linux
 
-It's a wrapper around the Linux timers. There are two ways of using
-the timer: by overloading the `timerEvent()` method in the `CppTimer` class
-itself (fastest) or by registering a callback class called `Runnable`
-with an overloaded `run()` method.
+It's a wrapper around the Linux timers. The timer used is timerfd
+which is a file descriptor which blocks till a certain time has
+elapsed. This means it puts a thread to sleep till it unblocks
+which is the general approach for Linux events.
+There are three ways of using
+the timer: 
+ 1. by overloading the `timerEvent()` method in the `CppTimer` class itself (fastest)
+ 2. by registering a callback class called `Runnable` with an overloaded `run()` method.
+ 3. by registering a lambda function
 
 ## Installation
 ```
