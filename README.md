@@ -63,7 +63,8 @@ demonstrates how to use this method.
 Here, the callback is established with the help of a lambda function
 instead of a callback interface. This allows direct registering
 of a method of the receiving class but one needs to get used to the
-lambda function syntax.
+lambda function syntax. It also allows more flexibility in doing
+some work inside of the lambda function and it's entirely pointer-free.
 
 ## Unit tests
 

@@ -1,5 +1,5 @@
-#ifndef __CPP_TIMER_CALLBACK
-#define __CPP_TIMER_CALLBACK
+#ifndef __CPP_TIMER_STD_CALLBACK
+#define __CPP_TIMER_STD_CALLBACK
 #include <stdio.h>
 #include "CppTimer.h"
 #include <unistd.h>
@@ -16,17 +16,15 @@ public:
     using CallbackFunction = std::function<void(void)>;
 
     void registerEventCallback(CallbackFunction cf) {
-	callbackFunctions.push_back(cf);
+	callbackFunction = cf;
     }
     
-    void timerEvent() {
-	for(auto &cb : callbackFunctions) {
-	    cb();
-	}
+    inline void timerEvent() {
+	callbackFunction();
     }
 
 private:
-    std::vector<CallbackFunction> callbackFunctions;
+    CallbackFunction callbackFunction;
 };
 
 
