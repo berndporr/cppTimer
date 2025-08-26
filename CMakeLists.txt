@@ -12,13 +12,13 @@ enable_testing()
 add_library(cpptimer INTERFACE)
 
 add_executable(demo demo.cpp)
-TARGET_LINK_LIBRARIES(demo cpptimer)
+TARGET_LINK_LIBRARIES(demo cpptimer pthread)
 
 add_executable(demo_runnable demo_runnable.cpp)
-TARGET_LINK_LIBRARIES(demo_runnable cpptimer)
+TARGET_LINK_LIBRARIES(demo_runnable cpptimer pthread)
 
 add_executable(demo_stdfunccallback demo_stdfunccallback.cpp)
-TARGET_LINK_LIBRARIES(demo_stdfunccallback cpptimer)
+TARGET_LINK_LIBRARIES(demo_stdfunccallback cpptimer pthread)
 
 
 add_subdirectory(test)
